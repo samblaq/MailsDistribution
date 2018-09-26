@@ -12,63 +12,30 @@ Use App\EmployeeDetail;
 |
 */
 
+Route::get('/admin/create', 'EmployeesController@getEmployeeProfileView');
+
+Route::resource('/admin/dashboard' , 'AdminController');
+
 Route::get('/', function () {
     return view('welcome');
 });
 
-Route::resource('/admin' , 'AdminController');
-Route::resource('/vendors' , 'ApkController');
+Route::get('/admin/pending' , 'TransactionStatusController@getPending');
+Route::get('/admin/APK' , 'TransactionStatusController@getAPK');
+Route::get('/admin/DHL' , 'TransactionStatusController@getDHL');
+Route::get('/admin/GhanaPost' , 'TransactionStatusController@getGhanaPost');
 
-Route::post('/register' , function(){
-    if(Request::ajax()){
-        return Response::json(Request::all());
-    }
-});
+// Route::resource('/admin' , 'AdminController');
+// Route::resource('/vendors' , 'ApkController');
 
-// Route::get('/branch' , function(){
-    
-//     $employee = new EmployeeDetail;
-//     $employee->staff_id = '9514';
-//     $employee->name = 'Dennis Moore';
-//     $employee->branch = 'Opeibea';
-//     $employee->department = 'Sales';
-//     $employee->unit = 'Customer Service';
-//     $employee->email = 'dennis@gmail.com';
-//     $employee->save();
-
-//     $employee = new EmployeeDetail;
-//     $employee->staff_id = '9413';
-//     $employee->name = 'Parker Moore';
-//     $employee->branch = 'Achimota';
-//     $employee->department = 'Security';
-//     $employee->unit = 'logistics';
-//     $employee->email = 'moorepaker@gmail.com';
-//     $employee->save();
-
-//     $employee = new EmployeeDetail;
-//     $employee->staff_id = '9544';
-//     $employee->name = 'Philemon Jobs';
-//     $employee->branch = 'Tudu';
-//     $employee->department = 'Information Technology';
-//     $employee->unit = 'ATM';
-//     $employee->email = 'philejobs@gmail.com';
-//     $employee->save();
-
-//     $employee = new EmployeeDetail;
-//     $employee->staff_id = '9464';
-//     $employee->name = 'Andrews Davidson';
-//     $employee->branch = 'Tarkwa';
-//     $employee->department = 'Operations';
-//     $employee->unit = 'Lending';
-//     $employee->email = 'harley@gmail.com';
-//     $employee->save();
-
-//     $employee = new EmployeeDetail;
-//     $employee->staff_id = '1542';
-//     $employee->name = 'Michael Edwards';
-//     $employee->branch = 'Head office';
-//     $employee->department = 'Human Resource';
-//     $employee->unit = 'Welfare';
-//     $employee->email = 'eddys@gmail.com';
-//     $employee->save();
+// Route::post('/register' , function(){
+//     if(Request::ajax()){
+//         return Response::json(Request::all());
+//     }  
 // });
+
+
+// Route::get('/' , 'AdminLoginController@index');
+// Route::post('/login' ,'AdminLoginController@checkLogin');
+// Route::get('/dashboard' , 'AdminLoginController@successLogin');
+// Route::get('/logout' , 'AdminLoginController@logout'); 

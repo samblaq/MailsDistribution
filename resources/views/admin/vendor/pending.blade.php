@@ -7,9 +7,8 @@
         <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
         <link href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
         <link href="//code.ionicframework.com/ionicons/1.5.2/css/ionicons.min.css" rel="stylesheet" type="text/css" />
-        {{--  <link href="assets/css/AdminLTE.css" rel="stylesheet" type="text/css" />  --}}
-        <link rel="stylesheet" href="{{ asset('css/libs.css') }}">
         <link href="https://fonts.googleapis.com/css?family=Abel" rel="stylesheet">
+        <link rel="stylesheet" href="{{ asset('css/libs.css') }}">
     </head>
     <body class="skin-black">
         <header class="header">
@@ -64,13 +63,13 @@
                         </div>
                     </form>
                     <ul class="sidebar-menu">
-                        <li >
-                            <a href="{{ route('admin.index') }}">
+                        <li>
+                            <a href="{{ route('dashboard.index') }}">
                                 <i class="fa fa-dashboard"></i> <span>Dashboard</span>
                             </a>
                         </li>
                         <li>
-                            <a href="{{ route('admin.create') }}">
+                            <a href="{{ route('dashboard.create') }}">
                                 <i class="fa fa-shopping-cart"></i> <span>Create Request</span>
                         </li>
                         <li>
@@ -79,7 +78,7 @@
                             </a>
                         </li>
                         <li>
-                            <a href="#">
+                            <a href="{{ url('admin/APK') }}">
                                 <i class="fa fa-users"></i> <span>APK</span> 
                             </a>
                         </li>
@@ -93,109 +92,78 @@
                                 <i class="fa fa-users"></i> <span>Ghana Post</span> 
                             </a>
                         </li>
-                        <li>
-                            <a href="#">
-                                <i class="fa fa-users"></i> <span>Logs</span> 
-                            </a>
-                        </li>
                     </ul>
                 </section>
             </aside>
             <aside class="right-side">
                 <section class="content-header">
                     <h1>
-                        Dashboard
-                        <small>Control panel</small>
+                        Users
+                        <small>Search &amp; Manage all users</small>
                     </h1>
                     <ol class="breadcrumb">
-                        <li><a href="{{ route('admin.index') }}"><i class="fa fa-dashboard"></i> Home</a></li>
-                        <li class="active">Dashboard</li>
+                        <li><a href="{{ route('dashboard.index') }}"><i class="fa fa-dashboard"></i> Home</a></li>
+                        <li class="active">Users</li>
                     </ol>
                 </section>
                 <section class="content">
                     <div class="row">
-                        <div class="col-lg-3 col-xs-6">
-                            <div class="small-box bg-aqua">
-                                <div class="inner">
-                                    <h3>
-                                        1
-                                    </h3>
-                                    <p>
-                                        New Orders
-                                    </p>
+                        <div class="col-xs-12">
+                            <div class="box">
+                                <div class="box-header">
+                                   
+                                   <div class="box-tools">
+                                        <div class="input-group" style="text-align: right;">
+                                            <form action="#" method="POST" >
+                                                <input type="text" name="table_search" class="form-control input-sm pull-right" style="width: 150px;" placeholder="Search"/>
+                                                <div class="input-group-btn">
+                                                    <button type="submit" name="submit_table_search" class="btn btn-sm btn-default"><i class="fa fa-search"></i></button>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="icon">
-                                    <i class="ion ion-plus"></i>
+                                <div class="box-body table-responsive no-padding">
+                                    <table class="table table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th>Transaction #</th>
+                                                <th>Staff ID</th>
+                                                <th>FullName</th>
+                                                <th>Branch</th>
+                                                <th>Department</th>
+                                                <th>Delivery</th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @if($transacts)
+                                                @foreach($transacts as $transact)
+                                                    <tr>
+                                                        <td>{{ $transact->TransactionCode }}</td>
+                                                        <td>{{ $transact->id }}</td>
+                                                        <td>{{ $transact->recieverFullName }}</td>
+                                                        <td>{{ $transact->Branch }}</td>
+                                                        <td>{{ $transact->recieverDepartment }}</td>
+                                                        <td>{{ $transact->deliveryMode }}</td>
+                                                        <td><a href="#" class="btn btn-warning">Edit</a></td>
+                                                    </tr>
+                                                @endforeach
+                                            @endif
+                                        </tbody>
+                                    </table>
                                 </div>
-                                <a href="#" class="small-box-footer">
-                                    More info <i class="fa fa-arrow-circle-right"></i>
-                                </a>
-                            </div>
-                        </div>
-                        <div class="col-lg-3 col-xs-6">
-                            <div class="small-box bg-yellow">
-                                <div class="inner">
-                                    <h3>
-                                        2
-                                    </h3>
-                                    <p>
-                                        Ongoing Orders
-                                    </p>
-                                </div>
-                                <div class="icon">
-                                    <i class="ion ion-loop"></i>
-                                </div>
-                                <a href="#" class="small-box-footer">
-                                    More info <i class="fa fa-arrow-circle-right"></i>
-                                </a>
-                            </div>
-                        </div>
-                        <div class="col-lg-3 col-xs-6">
-                            <div class="small-box bg-green">
-                                <div class="inner">
-                                    <h3>
-                                        3
-                                    </h3>
-                                    <p>
-                                        Completed Orders
-                                    </p>
-                                </div>
-                                <div class="icon">
-                                    <i class="ion ion-checkmark"></i>
-                                </div>
-                                <a href="#" class="small-box-footer">
-                                    More info <i class="fa fa-arrow-circle-right"></i>
-                                </a>
-                            </div>
-                        </div>
-                        <div class="col-lg-3 col-xs-6">
-                            <div class="small-box bg-red">
-                                <div class="inner">
-                                    <h3>
-                                        4
-                                    </h3>
-                                    <p>
-                                        Cancelled Orders
-                                    </p>
-                                </div>
-                                <div class="icon">
-                                    <i class="ion ion-close"></i>
-                                </div>
-                                <a href="#" class="small-box-footer">
-                                    More info <i class="fa fa-arrow-circle-right"></i>
-                                </a>
                             </div>
                         </div>
                     </div>
                 </section>
-            </aside>
+            </aside> 
         </div>
+
+
         <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
         <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js" type="text/javascript"></script>
         <script src="//code.jquery.com/ui/1.11.1/jquery-ui.min.js" type="text/javascript"></script>
         <script src="{{ asset('js/libs.js') }}" type="text/javascript"></script>
-        {{--  <script src="assets/js/AdminLTE/app.js" type="text/javascript"></script>  --}}
-        {{--  <script src="assets/js/AdminLTE/dashboard.js" type="text/javascript"></script>  --}}
-        {{--  <script src="assets/js/AdminLTE/demo.js" type="text/javascript"></script>  --}}
     </body>
 </html>

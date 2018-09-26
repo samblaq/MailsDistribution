@@ -3,13 +3,12 @@
     <head>
         <meta charset="UTF-8">
         <title>Manager | Dashboard</title>
-        <meta name="csrf-token" content="{{ csrf_token() }}" />
         <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
         <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
         <link href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
         <link href="//code.ionicframework.com/ionicons/1.5.2/css/ionicons.min.css" rel="stylesheet" type="text/css" />
-        <link rel="stylesheet" href="{{ asset('css/libs.css') }}">
         <link href="https://fonts.googleapis.com/css?family=Abel" rel="stylesheet">
+        <link rel="stylesheet" href="{{ asset('css/libs.css') }}">
     </head>
     <body class="skin-black">
         <header class="header">
@@ -65,12 +64,12 @@
                     </form>
                     <ul class="sidebar-menu">
                         <li>
-                            <a href="{{ route('admin.index') }}">
+                            <a href="{{ route('dashboard.index') }}">
                                 <i class="fa fa-dashboard"></i> <span>Dashboard</span>
                             </a>
                         </li>
                         <li>
-                            <a href="{{ route('admin.create') }}">
+                            <a href="{{ route('dashboard.create') }}">
                                 <i class="fa fa-shopping-cart"></i> <span>Create Request</span>
                         </li>
                         <li>
@@ -79,29 +78,23 @@
                             </a>
                         </li>
                         <li>
-                            <a href="vendors.apkd">
+                            <a href="{{ url('admin/APK') }}">
                                 <i class="fa fa-users"></i> <span>APK</span> 
                             </a>
                         </li>
                         <li>
-                            <a href="#">
+                            <a href="{{ url('admin/DHL') }}">
                                 <i class="fa fa-users"></i> <span>DHL</span>
                             </a>
                         </li>
                         <li>
-                            <a href="#">
+                            <a href="{{ url('admin/GhanaPost') }}">
                                 <i class="fa fa-users"></i> <span>Ghana Post</span> 
                             </a>
                         </li>
-                        <li>
-                            <a href="#">
-                                <i class="fa fa-users"></i> <span>Logs</span> 
-                            </a>
-                        </li>
-                    </ul>
+                     </ul>
                 </section>
             </aside>
-            {{-- Content page header --}}
             <aside class="right-side">
                 <section class="content-header">
                     <h1>
@@ -109,32 +102,56 @@
                         <small>Search &amp; Manage all users</small>
                     </h1>
                     <ol class="breadcrumb">
-                        <li><a href="{{ route('admin.index') }}"><i class="fa fa-dashboard"></i> Home</a></li>
+                        <li><a href="{{ route('dashboard.index') }}"><i class="fa fa-dashboard"></i> Home</a></li>
                         <li class="active">Users</li>
                     </ol>
                 </section>
-
                 <section class="content">
                     <div class="row">
-                        <div class="col-xs-8">
-                            <div class="box box-success">
+                        <div class="col-xs-12">
+                            <div class="box">
                                 <div class="box-header">
-                                    <h3 class="box-title"><strong>Create Request</strong></h3>
+                                   
+                                   <div class="box-tools">
+                                        <div class="input-group" style="text-align: right;">
+                                            <form action="#" method="POST" >
+                                                <input type="text" name="table_search" class="form-control input-sm pull-right" style="width: 150px;" placeholder="Search"/>
+                                                <div class="input-group-btn">
+                                                    <button type="submit" name="submit_table_search" class="btn btn-sm btn-default"><i class="fa fa-search"></i></button>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="body">
-                                    
+                                <div class="box-body table-responsive no-padding">
+                                    <table class="table table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th>Transaction #</th>
+                                                <th>Staff ID</th>
+                                                <th>FullName</th>
+                                                <th>Branch</th>
+                                                <th>Department</th>
+                                                <th>Delivery</th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                           
+                                        </tbody>
+                                    </table>
                                 </div>
                             </div>
                         </div>
                     </div>
-                 </section>
-            </aside>
+                </section>
+            </aside> 
         </div>
 
 
         <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
         <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js" type="text/javascript"></script>
         <script src="//code.jquery.com/ui/1.11.1/jquery-ui.min.js" type="text/javascript"></script>
-        <script src="{{ asset('js/libs.js') }}"></script>
+        <script src="{{ asset('js/libs.js') }}" type="text/javascript"></script>
     </body>
 </html>

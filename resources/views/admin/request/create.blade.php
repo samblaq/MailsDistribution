@@ -65,12 +65,12 @@
                     </form>
                     <ul class="sidebar-menu">
                         <li>
-                            <a href="{{ route('admin.index') }}">
+                            <a href="{{ route('dashboard.index') }}">
                                 <i class="fa fa-dashboard"></i> <span>Dashboard</span>
                             </a>
                         </li>
                         <li>
-                            <a href="{{ route('admin.create') }}">
+                            <a href="{{ route('dashboard.create') }}">
                                 <i class="fa fa-shopping-cart"></i> <span>Create Request</span>
                         </li>
                         <li>
@@ -79,7 +79,7 @@
                             </a>
                         </li>
                         <li>
-                            <a href="#">
+                            <a href="{{ url('admin/APK') }}">
                                 <i class="fa fa-users"></i> <span>APK</span> 
                             </a>
                         </li>
@@ -93,11 +93,6 @@
                                 <i class="fa fa-users"></i> <span>Ghana Post</span> 
                             </a>
                         </li>
-                        <li>
-                            <a href="#">
-                                <i class="fa fa-users"></i> <span>Logs</span> 
-                            </a>
-                        </li>
                     </ul>
                 </section>
             </aside>
@@ -109,7 +104,7 @@
                         <small>Search &amp; Manage all users</small>
                     </h1>
                     <ol class="breadcrumb">
-                        <li><a href="{{ route('admin.index') }}"><i class="fa fa-dashboard"></i> Home</a></li>
+                        <li><a href="{{ route('dashboard.index') }}"><i class="fa fa-dashboard"></i> Home</a></li>
                         <li class="active">Users</li>
                     </ol>
                 </section>
@@ -121,68 +116,77 @@
                                 <div class="box-header">
                                     <h3 class="box-title"><strong>Create Request</strong></h3>
                                 </div>
+                                
+                                @if(count($errors) > 0)
+                                    <div class="alert alert-danger">
+                                        <ul>
+                                            @foreach ($errors->all() as $error)
+                                                <li>{{ $error }}</li>
+                                            @endforeach
+                                        </ul>
+                                    </div>
+                                @endif
+
                                 <div class="body">
+                                    <div class="form-group">
+                                        <label for="staff" class="control-label"> Staff ID</label>
+                                        <input type="text" class="form-control" id="searchInput" name="searchInput"><br>
+                                        <p id="notFoundMsg" class="control-label text-center text-danger"></p>
+                                    </div>
                                     
-                                    {{-- {!! Form::open(['route' => 'admin.create' ,'id' => 'register']) !!} --}}
-                                        
-                                        <form action="#"  id="register">
-                                                <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                                            <div class="form-group">
-                                                <label for="staff" class="control-label"> Staff</label>
-                                                <input type="text" class="form-control" id="staff" name="staff">
-                                            </div>
-    
-                                            <div class="form-group">
-                                                <input type="submit" value="submit" name="Submit" id="sub">
-                                            </div>
-                                        </form>
+                                    <div id="employeeProfileElement">
+                                        <h4 style="text-align:center">Employee Profile: <span id="employeeName" class="text-success"></span></h4>
+                                        {!! Form::open(['method' => 'POST' , 'action' => 'AdminController@store']) !!}
 
-                                        {{-- <div class="form-group">
-                                            {!! Form::label('branchFrom', 'Branch: ', ['class' => 'control-label']) !!}
-                                            
-                                            {!! Form::select('branchFrom', ['' => 'Choose Branch'] , null, ['class' => 'form-control']) !!}
-                                        </div>
-
-                                        <div class="form-group">
-                                            {!! Form::label('from', 'Department/Unit (Sending)', ['class' => 'control-label']) !!}
-                                            
-                                            {!! Form::select('from', ['' => 'Choose Department/Unit'] , null , ['class' => 'form-control']) !!}
-                                        </div>
-                                        <div class="form-group">
-                                            {!! Form::label('sender', 'Name of Staff(Sender)', ['class' => 'control-label']) !!}
-                                            
-                                            {!! Form::text('sender', null, ['class' => 'form-control']) !!}
-                                        </div>
-                                        
-                                        <div class="form-group">
-                                            {!! Form::label('branchTo', 'Branch: ', ['class' => 'control-label']) !!}
-                                            
-                                            {!! Form::select('branchTo', ['' => 'Choose Branch'] , null, ['class' => 'form-control']) !!}
-                                        </div>
-
-                                        <div class="form-group">
-                                            {!! Form::label('to', 'Department/Unit (Recieving)', ['class' => 'control-label']) !!}
-                                            
-                                            {!! Form::select('to', ['' => 'Choose Department/Unit'] , null , ['class' => 'form-control']) !!}
-                                        </div>
-                                        <div class="form-group">
-                                            {!! Form::label('reciever', 'Name of Staff(Reciever)', ['class' => 'control-label']) !!}
-                                            
-                                            {!! Form::text('reciever', null, ['class' => 'form-control']) !!}
-                                        </div>
-                                        
-                                        <div class="form-group">
-                                            {!! Form::label('date', 'Date:', ['class' => 'control-label']) !!}
-                                            
-                                            {!! Form::datetime('date', null, ['class' => 'form-control']) !!}
-                                        </div>
-                                        <div class="box-footer">
                                             <div class="form-group">
-                                                {!! Form::submit('Create Request' , ['class' => 'form-control btn btn-primary']) !!}
+                                                {!! Form::label("staff", "FullName: ", ['class' => 'control-label']) !!}
+                                                    
+                                                {!! Form::text("FullName", null, ['id' => 'fullname' ,'class' => 'form-control', 'readonly']) !!}
                                             </div>
-                                        </div> --}}
-                                    {{-- {!! Form::close() !!} --}}
-                                        <div id="postRequestData"></div>
+
+                                            <div class="form-group">
+                                                {!! Form::label("branch", "Branch: ", ['class' => 'control-label']) !!}
+                                                        
+                                                {!! Form::text("Branch", null, ['id' => 'branch' ,'class' => 'form-control','readonly']) !!}
+                                            </div>
+
+                                            <div class="form-group">
+                                                {!! Form::label("department", "Department: ", ['class' => 'control-label']) !!}
+                                                    
+                                                {!! Form::text("Department", null, ['id' => 'department' ,'class' => 'form-control' , 'readonly']) !!}
+                                            </div>
+
+                                            <h4 style="text-align:center">Reciever Details</h4>
+                                            <div class="form-group">
+                                                {!! Form::label("recieverFullName", "FullName: ", ['class' => 'control-label']) !!}
+                                                    
+                                                {!! Form::text("recieverFullName", null, ['id' => 'recieverFullName' ,'class' => 'form-control']) !!}
+                                            </div>
+
+                                            <div class="form-group">
+                                                {!! Form::label("recieverBranch", "Branch: ", ['class' => 'control-label']) !!}
+                                                    
+                                                {!! Form::text("recieverBranch", null, ['id' => 'recieverBranch' ,'class' => 'form-control']) !!}
+                                            </div>
+
+                                            <div class="form-group">
+                                                {!! Form::label("recieverDepartment", "Department: ", ['class' => 'control-label']) !!}
+                                                    
+                                                {!! Form::text("recieverDepartment", null, ['id' => 'recieverDepartment' ,'class' => 'form-control']) !!}
+                                            </div>
+
+                                            <div class="form-group">
+                                                {!! Form::label('deliveryMode' , 'Delivery: ' , ['class' => 'control-label']) !!}
+
+                                                {!! Form::select('deliveryMode' , ['' => 'Choose Options'] + $delivery ,null , ['class' => 'form-control', 'id' => 'deliveryMode']) !!}
+                                            </div>
+                                            <div class="form-group">
+                                                
+                                                {!! Form::submit("submit", ['class' => 'btn btn-primary form-control']) !!}
+                                                
+                                            </div>
+                                        {!! Form::close() !!}
+                                     </div>
                                 </div>
                             </div>
                         </div>
@@ -196,9 +200,11 @@
         <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js" type="text/javascript"></script>
         <script src="//code.jquery.com/ui/1.11.1/jquery-ui.min.js" type="text/javascript"></script>
         <script src="{{ asset('js/libs.js') }}"></script>
+        {{--Demo javascript code--}}
+        <script src="{{asset('app/main.js')}}"></script>
         {{-- <script src="js/jquery.js"></script> --}}
 
-        <script type="text/javascript">
+        {{-- <script type="text/javascript">
             $.ajaxSetup({
                 header: {
                     'X-CSRF-TOKEN' : $ ('meta[name="csrf-token"]').attr('content')
@@ -215,6 +221,6 @@
                     });
                 });
             });
-        </script>
+        </script> --}}
     </body>
 </html>

@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
+use App\Http\Requests\TransactionRequest;
+use App\Transaction;
+use App\DeliveryMode;
 class AdminController extends Controller
 {
     /**
@@ -13,7 +15,7 @@ class AdminController extends Controller
      */
     public function index()
     {
-        return view('admin.index');
+        return view('admin.request.index');
     }
 
     /**
@@ -23,7 +25,8 @@ class AdminController extends Controller
      */
     public function create()
     {
-        return view('admin.create');
+        $delivery = DeliveryMode::pluck('name','id')->all();
+        return view('admin.request.create' , compact('delivery'));
     }
 
     /**
@@ -32,9 +35,28 @@ class AdminController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(TransactionRequest $request)
     {
-        //
+
+        $input = $request->all();
+
+        $Code = 'T'. date('d') . date('m') . date('Y');
+        $TransactionCount = count(Transaction::all()) + 1;
+
+        if($TransactionCount < 10){
+            $transactionCode = $Code . "000" . $TransactionCount;
+        }elseif($TransactionCount < 100){
+            $transactionCode = $Code . "00" . $TransactionCount;
+        }elseif($TransactionCount < 1000){
+            $transactionCode = $Code . "0" . $TransactionCount;
+        }else{
+            $transactionCode = $Code . $TransactionCount;
+        }
+
+        $input['TransactionCode'] = $transactionCode;
+        Transaction::create($input);
+        
+        return redirect('admin/dashboard');
     }
 
     /**
