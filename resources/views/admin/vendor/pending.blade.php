@@ -7,7 +7,7 @@
         <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
         <link href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
         <link href="//code.ionicframework.com/ionicons/1.5.2/css/ionicons.min.css" rel="stylesheet" type="text/css" />
-        <link href="https://fonts.googleapis.com/css?family=Abel" rel="stylesheet">
+        <link href="https://fonts.googlexapis.com/css?family=Abel" rel="stylesheet">
         <link rel="stylesheet" href="{{ asset('css/libs.css') }}">
     </head>
     <body class="skin-black">
@@ -64,7 +64,7 @@
                     </form>
                     <ul class="sidebar-menu">
                         <li>
-                            <a href="{{ route('dashboard.index') }}">
+                            <a href="#">
                                 <i class="fa fa-dashboard"></i> <span>Dashboard</span>
                             </a>
                         </li>
@@ -102,7 +102,7 @@
                         <small>Search &amp; Manage all users</small>
                     </h1>
                     <ol class="breadcrumb">
-                        <li><a href="{{ route('dashboard.index') }}"><i class="fa fa-dashboard"></i> Home</a></li>
+                        <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
                         <li class="active">Users</li>
                     </ol>
                 </section>
@@ -142,11 +142,12 @@
                                                     <tr>
                                                         <td>{{ $transact->TransactionCode }}</td>
                                                         <td>{{ $transact->id }}</td>
+                                                        <td>{{ $transact->Staff_ID }}</td>
                                                         <td>{{ $transact->recieverFullName }}</td>
                                                         <td>{{ $transact->Branch }}</td>
                                                         <td>{{ $transact->recieverDepartment }}</td>
                                                         <td>{{ $transact->deliveryMode }}</td>
-                                                        <td><a href="#" class="btn btn-warning">Edit</a></td>
+                                                        <td><a href="{{ route('dashboard.edit', $transact->id) }}" class="btn btn-warning">Edit</a></td>
                                                     </tr>
                                                 @endforeach
                                             @endif

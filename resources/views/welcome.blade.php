@@ -13,42 +13,40 @@
 </head>
 
 <body style="background:url('wallpaper.jpg') no-repeat center center fixed; background-size:cover;">
-	@if(isset(Auth::user()->username))
-		<script>window.location="/login";</script>
-	@endif
-
-	@if($message = Session::get('error'))
-		<div class="alert alert-danger alert-block">
-			<button type="button" class="close" data-dismiss="alert">x</button>
-			<strong>{{ $message }}</strong>
-		</div>
-	@endif
-
-	@if(count($errors) > 0)
-		<div class="alert alert-danger">
-			<ul>
-				@foreach($errors->all() as $error)
-					<li>{{ $error }}</li>
-				@endforeach
-			</ul>
-		</div>
-	@endif
-<form method="POST" action="{{ url('/login') }}">
-	<div style="text-align:center;">
-	  
-	  <header style="font-family: 'Quicksand', sans-serif;"><h3>Mails & Distribution</h3><br>Admin Portal</header>
-	  <label style="font-family: 'Quicksand', sans-serif;">Username <span> *</span></label>
-	  <input type="text" name="username" />
-	  <div class="help" style="font-family: 'Quicksand', sans-serif;">At least 6 character</div>
-	  <label style="font-family: 'Quicksand', sans-serif;">Password <span> *</span></label>
-	  <input name="password" type="password"  />
-	  <div class="help" style="font-family: 'Quicksand', sans-serif;"> upper and lowercase lettes  well</div>
 	
-	  <div style="text-align:center;" style="font-family: 'Quicksand', sans-serif;">
-		    <button name="Login" type="submit" value="Login" style="font-family: 'Quicksand', sans-serif;">Login</button>
+	{!! Form::open(array('route' => 'sessions.store', 'class'=>'form-horizontal' )) !!}
+	
+		<div style="text-align:center">
+			<header style="font-family: 'Quicksand', sans-serif"><h3>Mails & Distribution</h3><br>Admin Portal</header>
 		</div>
-	</div>
-	<br>
-</form>  
+		<div style="text-align:center">
+				@if(count($errors) > 0)
+					<div class="alert alert-danger">
+						<ul>
+							@foreach($errors->all() as $error)
+								<li>{{ $error }}</li>
+							@endforeach 
+						</ul>
+					</div>
+				@endif
+			</div>
+		<div class="form-group" style="text-align:center">
+			{!! Form::label("username", "Username") !!}
+			
+			{!! Form::text("username", null) !!}
+		</div>
+
+		<div class="form-group" style="text-align:center">
+			{!! Form::label("password", "Password") !!}
+			
+			{!! Form::password("password", null) !!}
+		</div>
+		<br>
+		<div class="form-group">
+			{!! Form::submit("submit" , ['class' => 'btn btn-info']) !!}
+		</div>
+	{!! Form::close() !!}
+	
+	
 </body>
 </html>

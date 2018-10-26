@@ -24,10 +24,13 @@ class TransactionRequest extends FormRequest
     public function rules()
     {
         return [
+            'searchInput' => 'required',
+            'FullName' => 'required',
+            'Branch' => 'required',
+            'Department' => 'required',
             'recieverFullName' => 'required',
             'recieverBranch'   => 'required',
-            'recieverDepartment' => 'required',
-            'deliveryMode' => 'required'
+            'recieverDepartment' => 'required'
         ];
     }
 }

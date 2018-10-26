@@ -1,41 +1,35 @@
 <?php
-Use App\Branch;
-Use App\EmployeeDetail;
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
-*/
-
+use App\Branch;
 Route::get('/admin/create', 'EmployeesController@getEmployeeProfileView');
 
 Route::resource('/admin/dashboard' , 'AdminController');
 
-Route::get('/', function () {
-    return view('welcome');
-});
 
-Route::get('/admin/pending' , 'TransactionStatusController@getPending');
-Route::get('/admin/APK' , 'TransactionStatusController@getAPK');
-Route::get('/admin/DHL' , 'TransactionStatusController@getDHL');
-Route::get('/admin/GhanaPost' , 'TransactionStatusController@getGhanaPost');
-
-// Route::resource('/admin' , 'AdminController');
-// Route::resource('/vendors' , 'ApkController');
-
-// Route::post('/register' , function(){
-//     if(Request::ajax()){
-//         return Response::json(Request::all());
-//     }  
-// });
+Route::resource('/admin/request/apk' , 'ApkController');
+Route::resource('/admin/request/dhl' , 'DHLController');
+Route::resource('/admin/request/GhanaPost' , 'GhanaPostController');
 
 
-// Route::get('/' , 'AdminLoginController@index');
-// Route::post('/login' ,'AdminLoginController@checkLogin');
-// Route::get('/dashboard' , 'AdminLoginController@successLogin');
-// Route::get('/logout' , 'AdminLoginController@logout'); 
+ 
+
+Route::get('/' , 'AdminLoginController@create');
+Route::get('Sessionlogout' ,'AdminLoginController@destroy');
+Route::resource('sessions', 'AdminLoginController');
+
+Route::resource('/APK/search' , 'APKSearchController');
+Route::resource('/DHL/search' , 'DHLSearchController');
+
+
+
+Route::resource('/Department' , 'InternalController');
+
+
+Route::resource('/Acknowledgement' , 'ApkAcknowledgementController');
+
+Route::Post('/Generic' , 'GenericApkController@acknowledge');
+Route::Post('/Acknowledging' , 'GenericApkController@acknowledgeMails');
+Route::resource('/External/Mails' , 'ExternalMailsController');
+
+
+
+Route::resource('/Mails/Progress' , 'MailsProgressController' );

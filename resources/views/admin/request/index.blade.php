@@ -25,84 +25,18 @@
                 </a>
                 <div class="navbar-right">
                     <ul class="nav navbar-nav">
-                        <li class="dropdown user user-menu">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                <i class="glyphicon glyphicon-user"></i>
-                                <span>MailsDistribution<i class="caret"></i></span>
-                            </a>
-                            <ul class="dropdown-menu">
-                                <li  style="background-color: #333!important;" class="user-header bg-light-blue">
-                                    <p>
-                                       @if(isset(Auth::user()->username))
-                                            <strong>
-                                                Welcome {{ Auth::user()->username }}
-                                            </strong>
-                                       else
-                                            <script>window.location="/";</script>
-                                       @endif
-                                    </p>
-                                </li>
-                                <li class="user-body">
-                                    <div class="pull-left">
-                                        <a href="#" class="btn btn-default btn-flat">Profile</a>
-                                    </div>
-                                    <div class="pull-right">
-                                        @if(isset(Auth::user()->username))
-                                             <a href="{{ url('/logout') }}" class="btn btn-default btn-flat">Sign out</a>
-                                        else
-                                            <script>window.location="/";</script>
-                                        @endif
-                                       
-                                    </div>
-                                </li>
-                            </ul>
-                        </li>
+                        @include('includes.user-account')
                     </ul>
                 </div>
             </nav>
-        </header>
+        </header> 
         <div class="wrapper row-offcanvas row-offcanvas-left">
             <aside class="left-side sidebar-offcanvas">
                 <section class="sidebar">
-                    <form action="#" method="get" class="sidebar-form">
-                        <div class="input-group">
-                            <input type="text" name="q" class="form-control" placeholder="Search..."/>
-                            <span class="input-group-btn">
-                                <button type='submit' name='search' id='search-btn' class="btn btn-flat"><i class="fa fa-search"></i></button>
-                            </span>
-                        </div>
-                    </form>
-                    <ul class="sidebar-menu">
-                        <li >
-                            <a href="{{ route('dashboard.index') }}">
-                                <i class="fa fa-dashboard"></i> <span>Dashboard</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="{{ route('dashboard.create') }}">
-                                <i class="fa fa-shopping-cart"></i> <span>Create Request</span>
-                        </li>
-                        <li>
-                            <a href="#">
-                                <i class="fa fa-users"></i> <span>Edit Request</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="{{ url('admin/APK') }}">
-                                <i class="fa fa-users"></i> <span>APK</span> 
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#">
-                                <i class="fa fa-users"></i> <span>DHL</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#">
-                                <i class="fa fa-users"></i> <span>Ghana Post</span> 
-                            </a>
-                        </li>
-                    </ul>
+                    <br>
+                    <br>
+                    
+                    @include('includes.sidebar')
                 </section>
             </aside>
             <aside class="right-side">
@@ -112,7 +46,7 @@
                         <small>Control panel</small>
                     </h1>
                     <ol class="breadcrumb">
-                        <li><a href="{{ route('dashboard.index') }}"><i class="fa fa-dashboard"></i> Home</a></li>
+                        <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
                         <li class="active">Dashboard</li>
                     </ol>
                 </section>
@@ -120,19 +54,19 @@
                     <div class="row">
                         <div class="col-lg-3 col-xs-6">
                             <div class="small-box bg-aqua">
-                                <div class="inner">
+                                <div class="inner"> 
                                     <h3>
-                                        1
+                                        {{ $countApk }}
                                     </h3>
                                     <p>
-                                        Pending Request
+                                       <h4>APK Requests</h4>
                                     </p>
                                 </div>
                                 <div class="icon">
                                     <i class="ion ion-plus"></i>
                                 </div>
-                                <a href="{{ url('admin/pending') }}" class="small-box-footer">
-                                    More info <i class="fa fa-arrow-circle-right"></i>
+                                <a href="{{ route('apk.index') }}" class="small-box-footer">
+                                    View Requests <i class="fa fa-arrow-circle-right"></i>
                                 </a>
                             </div>
                         </div>
@@ -140,17 +74,17 @@
                             <div class="small-box bg-yellow">
                                 <div class="inner">
                                     <h3>
-                                        2
+                                        {{ $countDhl }}
                                     </h3>
                                     <p>
-                                        Ongoing Orders
+                                        <h4>DHL Requests</h4>
                                     </p>
                                 </div>
                                 <div class="icon">
                                     <i class="ion ion-loop"></i>
                                 </div>
-                                <a href="#" class="small-box-footer">
-                                    More info <i class="fa fa-arrow-circle-right"></i>
+                                <a href="{{ route('dhl.index') }}" class="small-box-footer">
+                                    View Requests <i class="fa fa-arrow-circle-right"></i>
                                 </a>
                             </div>
                         </div>
@@ -158,45 +92,28 @@
                             <div class="small-box bg-green">
                                 <div class="inner">
                                     <h3>
-                                        3
+                                        {{ $countGhanaPost }}
                                     </h3>
                                     <p>
-                                        Completed Orders
+                                        <h4>Ghana Post Requests</h4>
                                     </p>
                                 </div>
                                 <div class="icon">
                                     <i class="ion ion-checkmark"></i>
                                 </div>
-                                <a href="#" class="small-box-footer">
-                                    More info <i class="fa fa-arrow-circle-right"></i>
+                                <a href="{{ route('GhanaPost.index') }}" class="small-box-footer">
+                                    View Requests <i class="fa fa-arrow-circle-right"></i>
                                 </a>
                             </div>
                         </div>
-                        <div class="col-lg-3 col-xs-6">
-                            <div class="small-box bg-red">
-                                <div class="inner">
-                                    <h3>
-                                        4
-                                    </h3>
-                                    <p>
-                                        Cancelled Orders
-                                    </p>
-                                </div>
-                                <div class="icon">
-                                    <i class="ion ion-close"></i>
-                                </div>
-                                <a href="#" class="small-box-footer">
-                                    More info <i class="fa fa-arrow-circle-right"></i>
-                                </a>
-                            </div>
-                        </div>
+                        
                     </div>
                 </br></br>
                     <div class="row">
                             <div class="col-xs-8">
                                 <div class="box box-info">
                                     <div class="box-header">
-                                        <h3 class="box-title"><strong>LOGS</strong></h3>
+                                        <h3 class="box-title"><strong>ADMIN LOGS</strong></h3>
                                     </div>
                                     <div class="body">
                                         <div class="box-body table-responsive no-padding">

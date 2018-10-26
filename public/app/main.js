@@ -49,8 +49,8 @@ function getEmployeeProfileData(employeeId) {
             $('#fullname').attr('value',employeeObject.name);
             $('#branch').attr('value',employeeObject.branch);
             $('#department').attr('value',employeeObject.department);
-            $('#unit').attr('value',employeeObject.unit);
-            $('#email').attr('value',employeeObject.email);
+            // $('#unit').attr('value',employeeObject.unit);
+            // $('#email').attr('value',employeeObject.email);
             // $('#region').attr('value',employeeObject.region);
             // $('#telephone').attr('value', employeeObject.telephone_number);
             // $('#email').attr('value',employeeObject.email);

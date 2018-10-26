@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateEmployeeDetailsTable extends Migration
+class CreateDHLAcknowledgementsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,13 @@ class CreateEmployeeDetailsTable extends Migration
      */
     public function up()
     {
-        Schema::create('employee_details', function (Blueprint $table) {
+        Schema::create('d_h_l_acknowledgements', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('staff_id');
-            $table->string('name');
-            $table->string('branch');
-            $table->string('department');
-            $table->string('unit');
-            $table->string('email');
+            $table->string('searchInput')->nullable();
+            $table->string('TransactionCode');
+            $table->string('recieverFullName');
+            $table->string('recieverBranch');
+            $table->string('recieverDepartment');
             $table->timestamps();
         });
     }
@@ -32,6 +31,6 @@ class CreateEmployeeDetailsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('employee_details');
+        Schema::dropIfExists('d_h_l_acknowledgements');
     }
 }

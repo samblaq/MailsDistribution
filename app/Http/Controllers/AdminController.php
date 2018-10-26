@@ -6,18 +6,25 @@ use Illuminate\Http\Request;
 use App\Http\Requests\TransactionRequest;
 use App\Transaction;
 use App\DeliveryMode;
+use App\ApkModel;
+use App\DHLModel;
+use App\GhanaPostModel;
 class AdminController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\Response 
      */
     public function index()
-    {
-        return view('admin.request.index');
-    }
+    { 
+        $countApk = count(ApkModel::all());
+        $countDhl = count(DHLModel::all());
+        $countGhanaPost = count(GhanaPostModel::all());
 
+
+        return view('admin.request.index' , compact('countApk' , 'countDhl' , 'countGhanaPost'));
+    }
     /**
      * Show the form for creating a new resource.
      *
@@ -25,9 +32,9 @@ class AdminController extends Controller
      */
     public function create()
     {
-        $delivery = DeliveryMode::pluck('name','id')->all();
-        return view('admin.request.create' , compact('delivery'));
-    }
+        //$delivery = DeliveryMode::pluck('name','id')->all();
+        return view('admin.request.create');
+    } 
 
     /**
      * Store a newly created resource in storage.
@@ -38,7 +45,7 @@ class AdminController extends Controller
     public function store(TransactionRequest $request)
     {
 
-        $input = $request->all();
+        $input = $request->all(); 
 
         $Code = 'T'. date('d') . date('m') . date('Y');
         $TransactionCount = count(Transaction::all()) + 1;
@@ -54,6 +61,7 @@ class AdminController extends Controller
         }
 
         $input['TransactionCode'] = $transactionCode;
+        $input['Staff_ID'] = $request->searchInput;
         Transaction::create($input);
         
         return redirect('admin/dashboard');
@@ -77,8 +85,9 @@ class AdminController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
-    {
-        //
+    {   
+        $transact = Transaction::findOrFail($id);
+        return view('admin.request.edit', compact('transact'));
     }
 
     /**
@@ -88,9 +97,16 @@ class AdminController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(TransactionRequest $request, $id)
     {
-        //
+        $editRequest = Transaction::findOrFail($id);
+
+        $input = $request->all();
+        
+        $editRequest->update($input);
+        
+        return redirect('admin/dashboard');
+        // return $request->all();
     }
 
     /**

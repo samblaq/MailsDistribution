@@ -6,5 +6,5 @@ use Illuminate\Database\Eloquent\Model;
 
 class DeliveryMode extends Model
 {
-    protected $fillable = ['name']; 
+    protected $fillable = ['Delivery_Type'];
 }

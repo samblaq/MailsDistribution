@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateTransactionsTable extends Migration
+class CreatePendingMailsModelsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,16 +13,15 @@ class CreateTransactionsTable extends Migration
      */
     public function up()
     {
-        Schema::create('transactions', function (Blueprint $table) {
+        Schema::create('pending_mails_models', function (Blueprint $table) {
             $table->increments('id');
             $table->string('TransactionCode');
-            $table->string('FullName');
-            $table->string('Branch');
-            $table->string('Department');
-            $table->string('recieverFullName');
-            $table->string('recieverBranch');
-            $table->string('recieverDepartment');
-            $table->string('deliveryMode');
+            $table->string('Branch_From');
+            $table->string('Branch_To');
+            $table->string('package');
+            $table->string('deliverymode');
+            $table->string('deliveryperson');
+            $table->string('IssuedBy');
             $table->timestamps();
         });
     }
@@ -34,6 +33,6 @@ class CreateTransactionsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('transactions');
+        Schema::dropIfExists('pending_mails_models');
     }
 }

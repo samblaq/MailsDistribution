@@ -29,8 +29,15 @@ mix.scripts([
 ] , 'public/js/libs.js');
 
 
+mix.scripts([
+    'resources/assets/js/jquery.min.js',
+], 'public/js/min.js');
+    
+
 mix.styles([
     
-    'resources/assets/css/style.css'
+    'resources/assets/css/style.css',
+    'resources/assets/css/bootstrap.min.css'
+
 
 ], 'public/css/min.css')

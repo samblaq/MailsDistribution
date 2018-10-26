@@ -8,6 +8,7 @@ class Transaction extends Model
 {
     protected $fillable = [
         'TransactionCode',
+        'searchInput',
         'FullName',
         'Branch',
         'Department',

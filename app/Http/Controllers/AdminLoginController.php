@@ -3,39 +3,98 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Validator;
-use Auth;
+use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Session;
 
 class AdminLoginController extends Controller
 {
-    function index(){
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index()
+    {
+        //
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create()
+    {
         return view('welcome');
     }
 
-    function checkLogin(Request $request){
-        $this->validate($request, [
-            'username' => 'required',
-            'password' => 'required|alphaNum|min:3'
-        ]);
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(Request $request)
+    {
+        $input = Input::all();
 
-        $user_data = array(
-            'username' => $request->get('username'),
-            'password' => $request->get('password')
-        ); 
+        $attempt = Auth::attempt(array('username' => $input['username'], 'password' => $input['password']));
         
-        if(Auth::attempt($user_data)){
-            return redirect('/');
+        if($attempt){
+            // $data = $request->all();
+            // $data['']
+            return Redirect::to('admin/dashboard');
         }else{
-            return back()->with('error' , 'Wrond Details');
+            return Redirect::to('/');
         }
     }
 
-    function successLogin(){
-          return view('admin.index'); 
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function show($id)
+    {
+        //
     }
 
-    function logout(){
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function edit($id)
+    {
+        //
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, $id)
+    {
+        //
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy()
+    {
         Auth::logout();
-        return redirect ('/'); 
+		Session::flush();
+		return Redirect::to('/');
     }
 }

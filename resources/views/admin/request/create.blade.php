@@ -10,7 +10,7 @@
         <link href="//code.ionicframework.com/ionicons/1.5.2/css/ionicons.min.css" rel="stylesheet" type="text/css" />
         <link rel="stylesheet" href="{{ asset('css/libs.css') }}">
         <link href="https://fonts.googleapis.com/css?family=Abel" rel="stylesheet">
-    </head>
+    </head> 
     <body class="skin-black">
         <header class="header">
                 <div class="logo">
@@ -32,7 +32,6 @@
                             </a>
                             <ul class="dropdown-menu">
                                 <li  style="background-color: #333!important;" class="user-header bg-light-blue">
-                                    <img src="img/default-avatar.png" class="img-circle" alt="User Image" />
                                     <p>
                                         MailsDistribution
                                         <small>Member since Nov. 2012</small>
@@ -65,7 +64,7 @@
                     </form>
                     <ul class="sidebar-menu">
                         <li>
-                            <a href="{{ route('dashboard.index') }}">
+                            <a href="#">
                                 <i class="fa fa-dashboard"></i> <span>Dashboard</span>
                             </a>
                         </li>
@@ -84,12 +83,12 @@
                             </a>
                         </li>
                         <li>
-                            <a href="#">
+                            <a href="{{ url('admin/DHL') }}">
                                 <i class="fa fa-users"></i> <span>DHL</span>
                             </a>
                         </li>
                         <li>
-                            <a href="#">
+                            <a href="{{ url('admin/GhanaPost') }}">
                                 <i class="fa fa-users"></i> <span>Ghana Post</span> 
                             </a>
                         </li>
@@ -100,12 +99,11 @@
             <aside class="right-side">
                 <section class="content-header">
                     <h1>
-                        Users
-                        <small>Search &amp; Manage all users</small>
+                        Request
+                        <small>Create Request</small>
                     </h1>
                     <ol class="breadcrumb">
-                        <li><a href="{{ route('dashboard.index') }}"><i class="fa fa-dashboard"></i> Home</a></li>
-                        <li class="active">Users</li>
+                        <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
                     </ol>
                 </section>
 
@@ -128,11 +126,23 @@
                                 @endif
 
                                 <div class="body">
-                                    <div class="form-group">
+                                    {{-- <div class="form-group">
                                         <label for="staff" class="control-label"> Staff ID</label>
                                         <input type="text" class="form-control" id="searchInput" name="searchInput"><br>
                                         <p id="notFoundMsg" class="control-label text-center text-danger"></p>
-                                    </div>
+                                    </div> --}}
+                                    
+                                    {!! Form::open(['method' => 'POST' , 'action' => 'AdminController@store']) !!}
+                                        <div class="form-group">
+                                            
+                                            {!! Form::label("staff", "Staff ID:", ['class' => 'control-label']) !!}
+                                            
+                                            {!! Form::text("searchInput", null , ['id' => 'searchInput', 'class' => 'form-control']) !!}
+                                            <p id="notFoundMsg" class="control-label text-center text-danger"></p>
+                                        </div>
+                                    {!! Form::close() !!}
+                                    
+                                    
                                     
                                     <div id="employeeProfileElement">
                                         <h4 style="text-align:center">Employee Profile: <span id="employeeName" class="text-success"></span></h4>
